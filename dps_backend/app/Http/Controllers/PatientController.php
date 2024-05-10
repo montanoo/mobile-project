@@ -13,15 +13,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Patient::all();
     }
 
     /**
@@ -29,7 +21,10 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $patient = Patient::create($validated);
+        $patient->save();
+        return ['patient' => $patient];
     }
 
     /**
@@ -37,15 +32,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Patient $patient)
-    {
-        //
+        return $patient;
     }
 
     /**
@@ -53,7 +40,8 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        //
+        $patient->update($request->validated());
+        return $patient;
     }
 
     /**
@@ -61,6 +49,7 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        $patient->delete();
+        return response()->noContent();
     }
 }

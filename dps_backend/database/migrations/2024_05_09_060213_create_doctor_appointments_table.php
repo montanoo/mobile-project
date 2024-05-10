@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('doctor_appointments', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Doctor::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Patient::class)->constrained()->cascadeOnDelete();
+            $table->text('description');
             $table->timestamps();
         });
     }

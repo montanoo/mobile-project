@@ -13,23 +13,19 @@ class DoctorAppointmentController extends Controller
      */
     public function index()
     {
-        //
+        return DoctorAppointment::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreDoctorAppointmentRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $doctorAppointment = DoctorAppointment::create($validated);
+        $doctorAppointment->save();
+        return ['doctorAppointment' => $doctorAppointment];
     }
 
     /**
@@ -37,15 +33,8 @@ class DoctorAppointmentController extends Controller
      */
     public function show(DoctorAppointment $doctorAppointment)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(DoctorAppointment $doctorAppointment)
-    {
-        //
+        // ask for id instead
+        return $doctorAppointment;
     }
 
     /**
@@ -53,7 +42,8 @@ class DoctorAppointmentController extends Controller
      */
     public function update(UpdateDoctorAppointmentRequest $request, DoctorAppointment $doctorAppointment)
     {
-        //
+        $doctorAppointment->update($request->validated());
+        return $doctorAppointment;
     }
 
     /**
@@ -61,6 +51,7 @@ class DoctorAppointmentController extends Controller
      */
     public function destroy(DoctorAppointment $doctorAppointment)
     {
-        //
+        $doctorAppointment->delete();
+        return response()->noContent();
     }
 }

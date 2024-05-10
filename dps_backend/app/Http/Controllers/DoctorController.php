@@ -13,23 +13,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreDoctorRequest $request)
-    {
-        //
+        return Doctor::all();
     }
 
     /**
@@ -37,15 +21,7 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Doctor $doctor)
-    {
-        //
+        return $doctor;
     }
 
     /**
@@ -53,7 +29,8 @@ class DoctorController extends Controller
      */
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
-        //
+        $doctor->update($request->validated());
+        return $doctor;
     }
 
     /**
@@ -61,6 +38,7 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        $doctor->delete();
+        return response()->noContent();
     }
 }
