@@ -14,7 +14,8 @@
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.74.1",
-    "tailwind-rn": "^4.2.0"
+    "tailwind-rn": "^4.2.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

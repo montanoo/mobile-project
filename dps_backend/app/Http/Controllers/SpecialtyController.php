@@ -13,15 +13,7 @@ class SpecialtyController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Specialty::all();
     }
 
     /**
@@ -29,7 +21,11 @@ class SpecialtyController extends Controller
      */
     public function store(StoreSpecialtyRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $specialty = Specialty::create($validated);
+        $specialty->save();
+
+        return $specialty;
     }
 
     /**
@@ -37,7 +33,7 @@ class SpecialtyController extends Controller
      */
     public function show(Specialty $specialty)
     {
-        //
+        return $specialty;
     }
 
     /**

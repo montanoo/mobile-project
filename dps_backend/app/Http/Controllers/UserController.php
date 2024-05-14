@@ -43,6 +43,7 @@ class UserController extends Controller
         $user->save();
 
         $doctor = new Doctor($doctor);
+        $doctor->user_id = $user->id; // Set the user_id manually
         $doctor->save();
 
         $token = $user->createToken('token_name')->plainTextToken;

@@ -31,10 +31,9 @@ class DoctorAppointmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DoctorAppointment $doctorAppointment)
+    public function show($id)
     {
-        // ask for id instead
-        return $doctorAppointment;
+        return DoctorAppointment::find($id);;
     }
 
     /**

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();
+            $table->integer('role')->default(2); // 1 for admin, 2 for doctor, 3 for patient (i dont know if thats a case)
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

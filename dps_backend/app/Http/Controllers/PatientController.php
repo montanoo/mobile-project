@@ -24,7 +24,7 @@ class PatientController extends Controller
         $validated = $request->validated();
         $patient = Patient::create($validated);
         $patient->save();
-        return ['patient' => $patient];
+        return $patient;
     }
 
     /**

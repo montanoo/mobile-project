@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Doctor::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Patient::class)->constrained()->cascadeOnDelete();
+            $table->dateTime('schedule');
             $table->text('description');
             $table->timestamps();
         });
