@@ -1,7 +1,9 @@
+// App.tsx
 import React from 'react';
-import Home from './src/Pages/Home';
+import Navigation from './src/components/Navigation';
 
-function App() {
-  return <Home />;
-}
+const App: React.FC = () => {
+  return <Navigation />;
+};
+
 export default App;

@@ -95,7 +95,7 @@ class UserController extends Controller
 
         $token = $user->createToken('token_name')->plainTextToken;
 
-        return ['token' => $token];
+        return ['token' => $token, 'user' => $user];
     }
 
     public function logout()
