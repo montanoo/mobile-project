@@ -6,14 +6,17 @@ interface ILoginUserData {
 }
 
 interface IRegisterStudentData extends ILoginUserData {
-  roleId: number;
+  role: number;
 }
 
 export default {
   login(data: ILoginUserData) {
     return Http.post('login', {...data});
   },
-  register(data: IRegisterStudentData) {
-    return Http.post('/user/register', {...data});
+  register(data) {
+    return Http.post('register', {...data});
+  },
+  appointments() {
+    return Http.get('appointments/1');
   },
 };

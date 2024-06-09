@@ -23,8 +23,8 @@ class StoreDoctorAppointmentRequest extends FormRequest
     {
         return [
             'doctor_id' => 'required',
-            'patient_id' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'schedule' => 'required',
         ];
     }
 }

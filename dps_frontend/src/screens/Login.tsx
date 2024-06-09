@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import useUserStore from '../stores/user';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../components/Navigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -22,11 +23,15 @@ export default function Login() {
   const handleLogin = async () => {
     if (email && password) {
       try {
-        User.login({email, password}).then(res => {
-          setUser(res.data);
-          navigation.replace('Home');
-        });
-      } catch (error: any) {
+        const response = await User.login({email, password});
+        const token = response.data.token; // Assuming your response contains a token field
+
+        // Save the token to AsyncStorage
+        await AsyncStorage.setItem('token', token);
+
+        setUser(response.data);
+        navigation.replace('Home');
+      } catch (error) {
         console.error('Login Error:', error.message);
       }
     } else {
@@ -53,7 +58,10 @@ export default function Login() {
         secureTextEntry={true}
       />
       <TouchableOpacity onPress={handleLogin} style={styles.button}>
-        <Text style={styles.buttonText}>Iniciar sesión</Text>
+        <Text style={{...styles.buttonText}}>Iniciar sesión</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={{...styles.buttonText}}>Gmail</Text>
       </TouchableOpacity>
       <Text
         onPress={() => navigation.navigate('Register')}
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 44,
+    paddingHorizontal: 22,
     gap: 15,
   },
   title: {
