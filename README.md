@@ -9,4 +9,4 @@ Hemos decidido organizar nuestro proyecto en trello, nuestro board se ve más o 
 https://www.canva.com/design/DAGHj_vp3tc/dzQI7hx-HFhScfm-3oPq1g/edit
 
 # Manual técnico
-https://www.canva.com/design/DAGHj_vp3tc/dzQI7hx-HFhScfm-3oPq1g/edit
+https://drive.google.com/file/d/1Hgg48SIrksSE54eTzBGoVKP0Qo3QYr3m/view?usp=sharing
