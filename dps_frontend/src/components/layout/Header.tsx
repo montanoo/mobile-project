@@ -30,7 +30,7 @@ const Header = () => {
           <TouchableOpacity
             style={{...styles.gridItem}}
             onPress={navigateToDashboard}>
-            <Text style={styles.gridText}>Dashboard</Text>
+            <Text style={styles.gridText}>New Doctor</Text>
           </TouchableOpacity>
         )}
         {!user ? (

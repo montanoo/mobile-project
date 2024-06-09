@@ -208,7 +208,13 @@ const Home = () => {
                         )}
                       </Text>
                     </Text>
-                    <Text>{console.log(appointment, key)}</Text>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontFamily: 'Inter-Black',
+                      }}>
+                      Editar cita
+                    </Text>
                   </View>
                 ))}
             </View>
