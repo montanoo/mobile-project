@@ -20,34 +20,24 @@ export default function Dashboard() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleRegister = async () => {
-    if (name && email && password) {
+    if (name && email && password && description) {
       try {
         User.register({
           name,
           email,
           password,
+          description,
           role: 2,
         })
           .then(res => {
             navigation.replace('Home');
           })
           .catch(err => {
-            if (err.response) {
-              // The request was made and the server responded with a status code
-              // that falls out of the range of 2xx
-              console.log('Data:', err.response.data);
-              console.log('Status:', err.response.status);
-              console.log('Headers:', err.response.headers);
-            } else if (err.request) {
-              // The request was made but no response was received
-              console.log('Request:', err.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log('Error:', err.message);
-            }
-            console.log(err.config);
+            // Handle errors
+            console.error(err);
           });
       } catch (error: any) {
         console.error('Register Error:', error.message);
@@ -80,6 +70,13 @@ export default function Dashboard() {
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Description"
+        value={description}
+        onChangeText={setDescription}
+        multiline={true}
       />
       <TouchableOpacity onPress={handleRegister} style={styles.button}>
         <Text style={styles.buttonText}>Register</Text>
