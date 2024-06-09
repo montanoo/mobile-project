@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DoctorAppointmentController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialtyController;
 use App\Http\Controllers\UserController;
@@ -26,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'store'])->name('user.register');
-
+Route::resource('doctors', DoctorController::class);
 $guestRoutes = ['index', 'show'];
 
 Route::middleware('auth:sanctum')->group(function () use ($guestRoutes) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -26,31 +27,61 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required'],
-            'password' => ['required']
-        ]);
-        $doctor = $request->validate([
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string']
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'min:6'],
+            'role' => ['required', 'in:2,3'],
         ]);
 
-        $existing = User::query()->firstWhere('email', $credentials['email']);
-        if (!empty($existing)) {
-            throw ValidationException::withMessages(['email' => 'User already exists']);
-        }
-
-        $user = new User($credentials);
+        $user = new User([
+            'email' => $credentials['email'],
+            'password' => bcrypt($credentials['password']),
+            'role' => $credentials['role'],
+        ]);
         $user->save();
 
-        $doctor = new Doctor($doctor);
-        $doctor->user_id = $user->id; // Set the user_id manually
-        $doctor->save();
+        if ($credentials['role'] == 2) {
+            $request->validate([
+                'name' => ['required', 'string'],
+                'description' => ['required', 'string'],
+            ]);
+
+            $doctor = new Doctor([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+            ]);
+            $doctor->user()->associate($user);
+            $doctor->save();
+            $registrationType = 'doctor';
+        } else {
+            $request->validate([
+                'name' => ['required', 'string'],
+                'surname' => ['required', 'string'],
+                'age' => ['required', 'integer'],
+                'phone' => ['required', 'string'],
+                'description' => ['required', 'string'],
+            ]);
+
+            $patient = new Patient([
+                'name' => $request->input('name'),
+                'surname' => $request->input('surname'),
+                'age' => $request->input('age'),
+                'phone' => $request->input('phone'),
+                'description' => $request->input('description'),
+            ]);
+            $patient->user()->associate($user);
+            $patient->save();
+            $registrationType = 'patient';
+        }
 
         $token = $user->createToken('token_name')->plainTextToken;
-        return ['token' => $token,
-        'user' => $user,
-        'doctor' => $doctor];
+
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+            $registrationType => ($credentials['role'] == 2) ? $doctor : $patient,
+        ], 201);
     }
+
 
     /**
      * Display the specified resource.
@@ -95,7 +126,7 @@ class UserController extends Controller
 
         $token = $user->createToken('token_name')->plainTextToken;
 
-        return ['token' => $token];
+        return ['token' => $token, 'user' => $user];
     }
 
     public function logout()

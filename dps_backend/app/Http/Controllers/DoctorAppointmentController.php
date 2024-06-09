@@ -22,7 +22,14 @@ class DoctorAppointmentController extends Controller
      */
     public function store(StoreDoctorAppointmentRequest $request)
     {
+        $user = auth()->user();
+        $patientId = $user->patient->id;
+        // Validate the request data
         $validated = $request->validated();
+
+        // Add patient_id to the validated data
+        $validated['patient_id'] = $patientId;
+        // Create the doctor appointment with the validated data
         $doctorAppointment = DoctorAppointment::create($validated);
         $doctorAppointment->save();
         return ['doctorAppointment' => $doctorAppointment];
@@ -31,9 +38,17 @@ class DoctorAppointmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(DoctorAppointment $appointment)
     {
-        return DoctorAppointment::find($id);;
+        $user = auth()->user();
+        $userId = $user->patient->id;
+
+        $appointments = DoctorAppointment::query()
+            ->where('patient_id', $userId)
+            ->with('doctor')
+            ->get();
+
+        return $appointments;
     }
 
     /**
