@@ -10,6 +10,7 @@ import Register from '../screens/Register';
 import Header from './layout/Header';
 import Dashboard from '../screens/Dashboard';
 import Appointment from '../screens/Appointment';
+import Doctor from '../screens/Doctors';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   Register: undefined;
   Dashboard: undefined;
   Appointment: undefined;
+  Doctors: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -37,6 +39,7 @@ const Navigation: React.FC = () => {
         {!user && <Stack.Screen name="Register" component={Register} />}
         {user && <Stack.Screen name="Dashboard" component={Dashboard} />}
         {user && <Stack.Screen name="Appointment" component={Appointment} />}
+        <Stack.Screen name="Doctors" component={Doctor} />
         <Stack.Screen name="Protected">
           {() => (
             <ProtectedRoute>

@@ -99,6 +99,16 @@ const Home = () => {
             }}>
             más rápido, más sencillo
           </Text>
+          <TouchableOpacity onPress={() => navigate('Doctors')}>
+            <Text
+              style={{
+                fontFamily: 'Inter-Bold',
+                fontSize: 20,
+                color: 'black',
+              }}>
+              Conoce los doctores
+            </Text>
+          </TouchableOpacity>
           <View
             style={{
               display: 'flex',
